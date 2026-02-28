@@ -1,0 +1,42 @@
+# macOS
+.DS_Store
+*.swp
+*.swo
+
+# Xcode
+AlexanderOS/build/
+AlexanderOS/*.xcodeproj/xcuserdata/
+AlexanderOS/*.xcodeproj/project.xcworkspace/xcuserdata/
+AlexanderOS/*.xcworkspace/xcuserdata/
+AlexanderOS/DerivedData/
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+# Swift Package Manager
+.build/
+.swiftpm/
+Packages/*/build/
+Package.resolved
+
+# Node.js
+node_modules/
+whatsapp-relay/node_modules/
+whatsapp-relay/dist/
+whatsapp-relay/.auth/
+
+# Environment files
+.env
+whatsapp-relay/.env
+
+# AI Models (large files)
+*.gguf
+*.bin
+Models/
+
+# IDE
+.vscode/
+.idea/
+
+# Claude
+.claude/
