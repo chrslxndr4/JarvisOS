@@ -1,4 +1,6 @@
 import SwiftUI
+import JARVISCore
+import CommandCatalog
 
 struct SettingsView: View {
     @EnvironmentObject var environment: AppEnvironment
@@ -88,10 +90,21 @@ struct SettingsView: View {
                 Text("Qwen 2.5 1.5B (~1 GB) for intent classification, Whisper Base (~148 MB) for voice transcription. Models are stored locally.")
             }
 
-            // Shortcuts Registry
+            // Service Shortcuts (Built-in)
+            Section {
+                ForEach(ShortcutDiscovery.builtInShortcuts) { shortcut in
+                    ServiceShortcutRow(shortcut: shortcut)
+                }
+            } header: {
+                Text("Service Shortcuts")
+            } footer: {
+                Text("These shortcuts connect JARVIS to services it can't reach natively. Create each one in the Apple Shortcuts app with the exact name shown. Each shortcut should accept text input and open the callback URL with the result.")
+            }
+
+            // Custom Shortcuts Registry
             Section {
                 if environment.registeredShortcuts.isEmpty {
-                    Text("No shortcuts registered")
+                    Text("No custom shortcuts registered")
                         .foregroundStyle(.secondary)
                 } else {
                     ForEach(environment.registeredShortcuts, id: \.self) { shortcut in
@@ -106,9 +119,9 @@ struct SettingsView: View {
                     showingAddShortcut = true
                 }
             } header: {
-                Text("Siri Shortcuts")
+                Text("Custom Shortcuts")
             } footer: {
-                Text("Register your Siri Shortcuts so JARVIS can trigger them by name.")
+                Text("Register your own Siri Shortcuts so JARVIS can trigger them by name.")
             }
 
             // About
@@ -143,6 +156,45 @@ struct SettingsView: View {
                 newShortcutName = ""
                 newShortcutDescription = ""
             }
+        }
+    }
+}
+
+// MARK: - Service Shortcut Row
+
+private struct ServiceShortcutRow: View {
+    let shortcut: JARVISCore.CatalogShortcut
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 4) {
+            HStack {
+                Text(shortcut.name)
+                    .font(.body)
+                Spacer()
+                Image(systemName: iconName)
+                    .foregroundStyle(.secondary)
+            }
+            if let description = shortcut.description {
+                Text(description)
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                    .lineLimit(2)
+            }
+        }
+        .padding(.vertical, 2)
+    }
+
+    private var iconName: String {
+        switch shortcut.id {
+        case "builtin-weather": return "cloud.sun"
+        case "builtin-music": return "music.note"
+        case "builtin-whatsapp": return "message"
+        case "builtin-timer": return "timer"
+        case "builtin-dnd": return "moon.fill"
+        case "builtin-findmy": return "location"
+        case "builtin-text": return "bubble.left"
+        case "builtin-translate": return "globe"
+        default: return "arrow.right.circle"
         }
     }
 }

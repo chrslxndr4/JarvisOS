@@ -8,12 +8,15 @@
 
 /* Begin PBXBuildFile section */
 		0DD1E6F31836BCFFC9196459 /* CommandCatalog in Frameworks */ = {isa = PBXBuildFile; productRef = 0F4DC4235559782D6A13D59E /* CommandCatalog */; };
+		16B89928D9B5F82F93CCCAFE /* PipelineAccessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6BB3C80F09296FB3B6B6A09 /* PipelineAccessor.swift */; };
 		1B0E6CC206BA5D0E2A194E8E /* CommandLogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B04EF5F0FCFD6A4ECDEFA65 /* CommandLogView.swift */; };
 		1D4AC1DE2A4D6A1E545876DE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7D44E22181EB4124D4D11367 /* Assets.xcassets */; };
 		2647D6D5450B1D83F931E413 /* JARVISIntents.swift in Sources */ = {isa = PBXBuildFile; fileRef = C901C306C6A3F673ADFAB0F8 /* JARVISIntents.swift */; };
 		30519B5463DE9BB7AF091FA9 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC087540B5DA536DDDC0A382 /* SettingsView.swift */; };
 		5EEF15D5402D17EF5954F81F /* JARVISCore in Frameworks */ = {isa = PBXBuildFile; productRef = D06350DAE02F2BF9F87D0C67 /* JARVISCore */; };
+		69B1B39A23F57B533BE8DB4E /* ShortcutRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3E14846AFC13052C405781 /* ShortcutRunner.swift */; };
 		742156A0DF7D4C9B5A49785E /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E41053EFB2B4021205EBF2D /* DashboardView.swift */; };
+		772E5DC970E105206C7B295F /* JARVISURLHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EAE8A0B872E67099C2B2CE /* JARVISURLHandler.swift */; };
 		858E4D25DC05D4B60C13CB2B /* ExecutionEngine in Frameworks */ = {isa = PBXBuildFile; productRef = 296CC5854BFC4502A1D385FD /* ExecutionEngine */; };
 		86AA0A94CABAA2ECC4034A6C /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AB4D85C6B50E3BE5F615381 /* Secrets.swift */; };
 		86C271568A27E8B475B63202 /* MessageIntake in Frameworks */ = {isa = PBXBuildFile; productRef = 9ED3B65AB615D9BE87FD679B /* MessageIntake */; };
@@ -40,10 +43,13 @@
 		80ADCE106C7A0D9E7E974E87 /* AlexanderOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlexanderOSApp.swift; sourceTree = "<group>"; };
 		8E41053EFB2B4021205EBF2D /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
 		A3038A298AEA691011A9C739 /* ExecutionEngine */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ExecutionEngine; path = ../Packages/ExecutionEngine; sourceTree = SOURCE_ROOT; };
+		AB3E14846AFC13052C405781 /* ShortcutRunner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutRunner.swift; sourceTree = "<group>"; };
 		BA2DC1F8D98D88ACAC2B88C7 /* MessageIntake */ = {isa = PBXFileReference; lastKnownFileType = folder; name = MessageIntake; path = ../Packages/MessageIntake; sourceTree = SOURCE_ROOT; };
 		BC087540B5DA536DDDC0A382 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		C5EAE8A0B872E67099C2B2CE /* JARVISURLHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JARVISURLHandler.swift; sourceTree = "<group>"; };
 		C901C306C6A3F673ADFAB0F8 /* JARVISIntents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JARVISIntents.swift; sourceTree = "<group>"; };
 		E04CFA8B231C5F20425FDB96 /* AlexanderOS.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = AlexanderOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E6BB3C80F09296FB3B6B6A09 /* PipelineAccessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PipelineAccessor.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,6 +128,14 @@
 			);
 			sourceTree = "<group>";
 		};
+		4808B58B05BB6BF1C103836F /* Shortcuts */ = {
+			isa = PBXGroup;
+			children = (
+				AB3E14846AFC13052C405781 /* ShortcutRunner.swift */,
+			);
+			path = Shortcuts;
+			sourceTree = "<group>";
+		};
 		48401B0E24C38ABB403040C4 /* Dashboard */ = {
 			isa = PBXGroup;
 			children = (
@@ -145,6 +159,8 @@
 				7C3CDAFCF2E467545E070727 /* AppEnvironment.swift */,
 				1C91962B3DF1AB8F191C57A0 /* Intents */,
 				ED4284C076FC8595F2999D35 /* Pipeline */,
+				4808B58B05BB6BF1C103836F /* Shortcuts */,
+				8A9523B3B4A6629C1E752668 /* URLHandler */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -155,6 +171,14 @@
 				7D44E22181EB4124D4D11367 /* Assets.xcassets */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		8A9523B3B4A6629C1E752668 /* URLHandler */ = {
+			isa = PBXGroup;
+			children = (
+				C5EAE8A0B872E67099C2B2CE /* JARVISURLHandler.swift */,
+			);
+			path = URLHandler;
 			sourceTree = "<group>";
 		};
 		8D38CCBD93B69C776009D119 /* AlexanderOS */ = {
@@ -188,6 +212,7 @@
 			isa = PBXGroup;
 			children = (
 				0E249F82CE1DCFB35215A642 /* CommandPipeline.swift */,
+				E6BB3C80F09296FB3B6B6A09 /* PipelineAccessor.swift */,
 			);
 			path = Pipeline;
 			sourceTree = "<group>";
@@ -288,8 +313,11 @@
 				F0DD86C69BFB3FA869E54C83 /* CommandPipeline.swift in Sources */,
 				742156A0DF7D4C9B5A49785E /* DashboardView.swift in Sources */,
 				2647D6D5450B1D83F931E413 /* JARVISIntents.swift in Sources */,
+				772E5DC970E105206C7B295F /* JARVISURLHandler.swift in Sources */,
+				16B89928D9B5F82F93CCCAFE /* PipelineAccessor.swift in Sources */,
 				86AA0A94CABAA2ECC4034A6C /* Secrets.swift in Sources */,
 				30519B5463DE9BB7AF091FA9 /* SettingsView.swift in Sources */,
+				69B1B39A23F57B533BE8DB4E /* ShortcutRunner.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -304,6 +332,17 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_PREVIEWS = YES;
+				INFOPLIST_KEY_CFBundleURLTypes = (
+					{
+						CFBundleURLName = com.alexanderos.jarvis;
+						CFBundleURLSchemes = (
+							jarvis,
+						);
+					},
+				);
+				INFOPLIST_KEY_LSApplicationQueriesSchemes = (
+					shortcuts,
+				);
 				INFOPLIST_KEY_NSBonjourServices = _alexanderos._tcp;
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "Alexander OS needs HealthKit access to query your health data.";
 				INFOPLIST_KEY_NSHomeKitUsageDescription = "Alexander OS needs HomeKit access to control your smart home devices.";
@@ -399,6 +438,17 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_PREVIEWS = YES;
+				INFOPLIST_KEY_CFBundleURLTypes = (
+					{
+						CFBundleURLName = com.alexanderos.jarvis;
+						CFBundleURLSchemes = (
+							jarvis,
+						);
+					},
+				);
+				INFOPLIST_KEY_LSApplicationQueriesSchemes = (
+					shortcuts,
+				);
 				INFOPLIST_KEY_NSBonjourServices = _alexanderos._tcp;
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "Alexander OS needs HealthKit access to query your health data.";
 				INFOPLIST_KEY_NSHomeKitUsageDescription = "Alexander OS needs HomeKit access to control your smart home devices.";

@@ -34,7 +34,8 @@ actor CommandPipeline {
 
     init(
         relayURL: URL,
-        memory: MemoryStore
+        memory: MemoryStore,
+        shortcutRunner: ShortcutRunning? = nil
     ) throws {
         self.intake = RelayConnection(relayURL: relayURL)
         self.router = IntentClassifier()
@@ -43,10 +44,13 @@ actor CommandPipeline {
         self.reply = ResponseFormatter()
         self.transcriber = WhisperTranscriber()
 
-        // Wire up executor with note storage callback
-        self.executor = ExecutionRouter { [memory] content, tags in
-            try await memory.storeNote(content: content, tags: tags)
-        }
+        // Wire up executor with note storage callback and shortcut runner
+        self.executor = ExecutionRouter(
+            storeNote: { [memory] content, tags in
+                try await memory.storeNote(content: content, tags: tags)
+            },
+            shortcutRunner: shortcutRunner
+        )
 
         // Wire up reply handler's send callback
         Task {
@@ -191,6 +195,22 @@ actor CommandPipeline {
         try? await replyAndLog(command: command, intent: intent, result: result)
 
         return result
+    }
+
+    /// Execute a pre-built intent directly, bypassing LLM classification.
+    /// Used by typed App Intents (ControlDevice, CreateReminder, etc.)
+    func executeIntent(_ intent: JARVISIntent) async throws -> ExecutionResult {
+        // Handle recall separately (needs memory access)
+        if intent.action == .recall {
+            let query = intent.parameters["query"] ?? intent.target ?? ""
+            let results = try await memory.search(query: query)
+            if results.isEmpty {
+                return .success(message: "I don't have any notes about that.")
+            }
+            return .success(message: results.prefix(3).joined(separator: "\n"))
+        }
+
+        return try await executor.execute(intent: intent)
     }
 
     // MARK: - Helpers

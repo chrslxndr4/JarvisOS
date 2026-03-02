@@ -10,9 +10,9 @@ public actor ExecutionRouter: CommandExecuting {
     private let notes: NoteExecutor
     public let confirmation: ConfirmationEngine
 
-    public init(storeNote: @escaping NoteExecutor.StoreNote) {
+    public init(storeNote: @escaping NoteExecutor.StoreNote, shortcutRunner: ShortcutRunning? = nil) {
         self.homeKit = HomeKitExecutor()
-        self.shortcuts = ShortcutExecutor()
+        self.shortcuts = ShortcutExecutor(runner: shortcutRunner)
         self.reminders = ReminderExecutor()
         self.calendar = CalendarExecutor()
         self.navigation = NavigationExecutor()

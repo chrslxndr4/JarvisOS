@@ -12,14 +12,25 @@ struct RunJARVISCommand: AppIntent {
     var command: String
 
     func perform() async throws -> some IntentResult & ReturnsValue<String> {
-        let jarvisCommand = JARVISCommand(
-            rawText: command,
-            source: .siri
-        )
-
-        // Access the shared pipeline via AppEnvironment
-        // In a real implementation this would use a shared actor or app group
-        return .result(value: "Command received: \(command). Processing via JARVIS pipeline.")
+        // Free-form text goes through full LLM pipeline with 10s timeout
+        let result = await withTaskGroup(of: String.self) { group in
+            group.addTask {
+                do {
+                    return try await PipelineAccessor.shared.processCommand(command)
+                } catch {
+                    return "Error: \(error.localizedDescription)"
+                }
+            }
+            group.addTask {
+                try? await Task.sleep(for: .seconds(10))
+                return "JARVIS is still thinking. The command is being processed — check the app for results."
+            }
+            // Return whichever finishes first
+            let first = await group.next()!
+            group.cancelAll()
+            return first
+        }
+        return .result(value: result)
     }
 }
 
@@ -48,8 +59,22 @@ struct ControlDeviceIntent: AppIntent {
     }
 
     func perform() async throws -> some IntentResult & ReturnsValue<String> {
-        let actionText = action == .turnOn ? "turn on" : "turn off"
-        return .result(value: "JARVIS: \(actionText) \(deviceName)")
+        // Typed intent — bypass LLM, construct intent directly
+        let intentAction: IntentAction = action == .turnOn ? .turnOn : .turnOff
+        let intent = JARVISIntent(
+            action: intentAction,
+            target: deviceName,
+            confidence: 1.0,
+            humanReadable: "\(action == .turnOn ? "Turn on" : "Turn off") \(deviceName)"
+        )
+
+        do {
+            let result = try await PipelineAccessor.shared.environment?.executeIntent(intent)
+                ?? "JARVIS is not running. Please open the app."
+            return .result(value: result)
+        } catch {
+            return .result(value: "Error: \(error.localizedDescription)")
+        }
     }
 }
 
@@ -67,7 +92,27 @@ struct CreateReminderIntent: AppIntent {
     var dueDate: Date?
 
     func perform() async throws -> some IntentResult & ReturnsValue<String> {
-        return .result(value: "JARVIS: Reminder created - \(reminderText)")
+        // Typed intent — bypass LLM
+        var params: [String: String] = [:]
+        if let dueDate {
+            params["due"] = ISO8601DateFormatter().string(from: dueDate)
+        }
+
+        let intent = JARVISIntent(
+            action: .createReminder,
+            target: reminderText,
+            parameters: params,
+            confidence: 1.0,
+            humanReadable: "Create reminder: \(reminderText)"
+        )
+
+        do {
+            let result = try await PipelineAccessor.shared.environment?.executeIntent(intent)
+                ?? "JARVIS is not running. Please open the app."
+            return .result(value: result)
+        } catch {
+            return .result(value: "Error: \(error.localizedDescription)")
+        }
     }
 }
 
@@ -82,7 +127,21 @@ struct RememberIntent: AppIntent {
     var content: String
 
     func perform() async throws -> some IntentResult & ReturnsValue<String> {
-        return .result(value: "JARVIS: Noted - \(content)")
+        // Typed intent — bypass LLM
+        let intent = JARVISIntent(
+            action: .remember,
+            target: content,
+            confidence: 1.0,
+            humanReadable: "Remember: \(content)"
+        )
+
+        do {
+            let result = try await PipelineAccessor.shared.environment?.executeIntent(intent)
+                ?? "JARVIS is not running. Please open the app."
+            return .result(value: result)
+        } catch {
+            return .result(value: "Error: \(error.localizedDescription)")
+        }
     }
 }
 
@@ -97,7 +156,22 @@ struct RecallIntent: AppIntent {
     var query: String
 
     func perform() async throws -> some IntentResult & ReturnsValue<String> {
-        return .result(value: "JARVIS: Searching for '\(query)'...")
+        // Typed intent — bypass LLM
+        let intent = JARVISIntent(
+            action: .recall,
+            target: query,
+            parameters: ["query": query],
+            confidence: 1.0,
+            humanReadable: "Recall: \(query)"
+        )
+
+        do {
+            let result = try await PipelineAccessor.shared.environment?.executeIntent(intent)
+                ?? "JARVIS is not running. Please open the app."
+            return .result(value: result)
+        } catch {
+            return .result(value: "Error: \(error.localizedDescription)")
+        }
     }
 }
 

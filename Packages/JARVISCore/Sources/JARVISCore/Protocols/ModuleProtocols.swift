@@ -33,3 +33,7 @@ public protocol ResponseHandling: Actor {
     func send(response: ExecutionResult, for command: JARVISCommand) async throws
     func formatConfirmation(intent: JARVISIntent) -> String
 }
+
+public protocol ShortcutRunning: Sendable {
+    func runShortcut(name: String, input: [String: String]?) async throws -> String
+}

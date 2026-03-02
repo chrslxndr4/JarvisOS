@@ -75,7 +75,7 @@ final class AppEnvironment: ObservableObject {
         guard let url = URL(string: relayURL) else { return }
 
         do {
-            let pipe = try CommandPipeline(relayURL: url, memory: memory)
+            let pipe = try CommandPipeline(relayURL: url, memory: memory, shortcutRunner: ShortcutRunner())
             self.pipeline = pipe
 
             await pipe.onStateUpdate { [weak self] state in
@@ -148,6 +148,49 @@ final class AppEnvironment: ObservableObject {
     func fetchRecentCommands() async throws -> [CommandLogRecord] {
         guard let memory else { return [] }
         return try await memory.fetchRecentCommands()
+    }
+
+    // MARK: - Pipeline Command (for App Intents)
+
+    func processCommand(_ text: String) async throws -> String {
+        guard let pipeline else {
+            return "JARVIS pipeline is not running. Please open the app and ensure models are downloaded."
+        }
+
+        let command = JARVISCommand(rawText: text, source: .siri)
+        let result = try await pipeline.processCommand(command)
+
+        switch result {
+        case .success(let message):
+            return message
+        case .failure(let error):
+            return "Error: \(error)"
+        case .confirmationRequired(let prompt, _):
+            return prompt
+        case .ambiguous(let options):
+            return "Did you mean: \(options.joined(separator: ", "))?"
+        }
+    }
+
+    /// Execute a pre-built intent directly, bypassing LLM classification.
+    /// Used by typed App Intents that already know what action to perform.
+    func executeIntent(_ intent: JARVISIntent) async throws -> String {
+        guard let pipeline else {
+            return "JARVIS pipeline is not running. Please open the app and ensure models are downloaded."
+        }
+
+        let result = try await pipeline.executeIntent(intent)
+
+        switch result {
+        case .success(let message):
+            return message
+        case .failure(let error):
+            return "Error: \(error)"
+        case .confirmationRequired(let prompt, _):
+            return prompt
+        case .ambiguous(let options):
+            return "Did you mean: \(options.joined(separator: ", "))?"
+        }
     }
 
     // MARK: - Connection
