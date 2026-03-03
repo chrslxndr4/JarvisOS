@@ -49,18 +49,21 @@ targets:
         INFOPLIST_KEY_NSSiriUsageDescription: "Alexander OS uses Siri to process voice commands."
         INFOPLIST_KEY_NSLocalNetworkUsageDescription: "Alexander OS connects to the WhatsApp relay on your local network."
         INFOPLIST_KEY_NSBonjourServices: "_alexanderos._tcp"
-        INFOPLIST_KEY_CFBundleURLTypes:
-          - CFBundleURLName: com.alexanderos.jarvis
-            CFBundleURLSchemes:
-              - jarvis
-        INFOPLIST_KEY_LSApplicationQueriesSchemes:
-          - shortcuts
         CODE_SIGN_ENTITLEMENTS: AlexanderOS/Entitlements/AlexanderOS.entitlements
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
         SWIFT_EMIT_LOC_STRINGS: true
         ENABLE_PREVIEWS: true
         JAILBREAK_DETECTION_DISABLED: "YES"
         com.apple.developer.kernel.increased-memory-limit: true
+    info:
+      path: AlexanderOS/Info.plist
+      properties:
+        CFBundleURLTypes:
+          - CFBundleURLName: com.alexanderos.jarvis
+            CFBundleURLSchemes:
+              - jarvis
+        LSApplicationQueriesSchemes:
+          - shortcuts
     dependencies:
       - package: JARVISCore
       - package: MessageIntake

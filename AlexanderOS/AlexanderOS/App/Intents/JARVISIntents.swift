@@ -88,7 +88,7 @@ struct CreateReminderIntent: AppIntent {
     @Parameter(title: "Reminder Text")
     var reminderText: String
 
-    @Parameter(title: "Due", default: nil)
+    @Parameter(title: "Due")
     var dueDate: Date?
 
     func perform() async throws -> some IntentResult & ReturnsValue<String> {
@@ -182,9 +182,8 @@ struct JARVISShortcuts: AppShortcutsProvider {
         AppShortcut(
             intent: RunJARVISCommand(),
             phrases: [
-                "Ask \(.applicationName) to \(\.$command)",
-                "Tell \(.applicationName) \(\.$command)",
-                "\(.applicationName) \(\.$command)",
+                "Ask \(.applicationName) something",
+                "Tell \(.applicationName) something",
             ],
             shortTitle: "JARVIS Command",
             systemImageName: "brain"
@@ -193,7 +192,7 @@ struct JARVISShortcuts: AppShortcutsProvider {
         AppShortcut(
             intent: ControlDeviceIntent(),
             phrases: [
-                "\(.applicationName) \(\.$action) \(\.$deviceName)",
+                "\(.applicationName) control device",
             ],
             shortTitle: "Control Device",
             systemImageName: "lightbulb"
@@ -202,7 +201,7 @@ struct JARVISShortcuts: AppShortcutsProvider {
         AppShortcut(
             intent: RememberIntent(),
             phrases: [
-                "\(.applicationName) remember \(\.$content)",
+                "\(.applicationName) remember this",
             ],
             shortTitle: "Remember",
             systemImageName: "brain.head.profile"
@@ -211,7 +210,7 @@ struct JARVISShortcuts: AppShortcutsProvider {
         AppShortcut(
             intent: RecallIntent(),
             phrases: [
-                "Ask \(.applicationName) about \(\.$query)",
+                "Ask \(.applicationName) to recall",
             ],
             shortTitle: "Recall",
             systemImageName: "magnifyingglass"

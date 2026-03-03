@@ -111,12 +111,15 @@ public actor HomeKitExecutor {
     }
 
     private func setLockState(service: HMService, locked: Bool, deviceName: String) async throws -> ExecutionResult {
+        // Lock target state characteristic UUID per HAP spec
+        let lockTargetStateUUID = "00000019-0000-1000-8000-0026BB765291"
         guard let characteristic = service.characteristics.first(where: {
-            $0.characteristicType == HMCharacteristicTypeLockTargetState
+            $0.characteristicType == lockTargetStateUUID
         }) else {
             return .failure(error: "Device '\(deviceName)' doesn't support lock control")
         }
-        let state = locked ? HMLockTargetState.secured.rawValue : HMLockTargetState.unsecured.rawValue
+        // 1 = secured, 0 = unsecured (HAP spec values)
+        let state = locked ? 1 : 0
         try await characteristic.writeValue(state)
         return .success(message: "\(deviceName) \(locked ? "locked" : "unlocked")")
     }

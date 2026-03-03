@@ -31,6 +31,7 @@
 /* Begin PBXFileReference section */
 		0E249F82CE1DCFB35215A642 /* CommandPipeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandPipeline.swift; sourceTree = "<group>"; };
 		15A158555196C1C7C5B3712B /* AIRouter */ = {isa = PBXFileReference; lastKnownFileType = folder; name = AIRouter; path = ../Packages/AIRouter; sourceTree = SOURCE_ROOT; };
+		21BD45E0003925785AA9A4E1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		2B04EF5F0FCFD6A4ECDEFA65 /* CommandLogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandLogView.swift; sourceTree = "<group>"; };
 		3AB4D85C6B50E3BE5F615381 /* Secrets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Secrets.swift; sourceTree = "<group>"; };
 		412A40F5CBFCC20C3EDF8013 /* AlexanderOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AlexanderOS.entitlements; sourceTree = "<group>"; };
@@ -184,6 +185,7 @@
 		8D38CCBD93B69C776009D119 /* AlexanderOS */ = {
 			isa = PBXGroup;
 			children = (
+				21BD45E0003925785AA9A4E1 /* Info.plist */,
 				6491213115DDB4813F02ABDF /* App */,
 				EEC8D9C95188F9AA1C5D298D /* Configuration */,
 				53E2FC7833E0506CBFFC0CAB /* Entitlements */,
@@ -332,17 +334,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_PREVIEWS = YES;
-				INFOPLIST_KEY_CFBundleURLTypes = (
-					{
-						CFBundleURLName = com.alexanderos.jarvis;
-						CFBundleURLSchemes = (
-							jarvis,
-						);
-					},
-				);
-				INFOPLIST_KEY_LSApplicationQueriesSchemes = (
-					shortcuts,
-				);
+				INFOPLIST_FILE = AlexanderOS/Info.plist;
 				INFOPLIST_KEY_NSBonjourServices = _alexanderos._tcp;
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "Alexander OS needs HealthKit access to query your health data.";
 				INFOPLIST_KEY_NSHomeKitUsageDescription = "Alexander OS needs HomeKit access to control your smart home devices.";
@@ -438,17 +430,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_PREVIEWS = YES;
-				INFOPLIST_KEY_CFBundleURLTypes = (
-					{
-						CFBundleURLName = com.alexanderos.jarvis;
-						CFBundleURLSchemes = (
-							jarvis,
-						);
-					},
-				);
-				INFOPLIST_KEY_LSApplicationQueriesSchemes = (
-					shortcuts,
-				);
+				INFOPLIST_FILE = AlexanderOS/Info.plist;
 				INFOPLIST_KEY_NSBonjourServices = _alexanderos._tcp;
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "Alexander OS needs HealthKit access to query your health data.";
 				INFOPLIST_KEY_NSHomeKitUsageDescription = "Alexander OS needs HomeKit access to control your smart home devices.";

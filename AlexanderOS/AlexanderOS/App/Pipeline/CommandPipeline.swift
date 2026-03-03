@@ -103,7 +103,7 @@ actor CommandPipeline {
         processingTask = nil
         await intake.stopListening()
         await router.coolDown()
-        transcriber.unload()
+        await transcriber.unload()
     }
 
     // MARK: - Command Processing
@@ -117,7 +117,7 @@ actor CommandPipeline {
             // Transcribe audio if needed
             if command.source == .whatsappVoice, let audioData = command.audioData {
                 do {
-                    if !await transcriber.loaded {
+                    if await transcriber.loaded == false {
                         let downloadManager = try ModelDownloadManager()
                         if let modelPath = await downloadManager.localPath(for: .whisperBaseEn) {
                             try await transcriber.loadModel(at: modelPath.path)
